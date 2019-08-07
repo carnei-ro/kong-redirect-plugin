@@ -19,7 +19,7 @@ function plugin:access(conf)
     local request_uri    = conf['trim_trailing_slash'] and req_path:gsub('(.)%/$', '%1') or req_path
     request_uri          = (conf['trim_trailing_slash'] and (request_uri=='/')) and '' or request_uri
     location             = conf['include_path'] and (location .. request_uri) or location
-    ngx.log(ngx.ERR, "req_qs: '" .. req_qs .."'")
+
     if conf['include_querystring'] and req_qs ~= '' then
         location         = location .. '?' .. req_qs
     end

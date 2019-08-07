@@ -85,29 +85,39 @@ req-aux:
 	@curl -s http://localhost:8000/aux
 
 config:
-	@curl -s -X POST http://localhost:8001/services/ -d 'name=oauth' -d url=http://localhost
-	@curl -s -X POST http://localhost:8001/services/oauth/routes -d 'paths[]=/' 
-	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}" -F "config.location=https://google.com"
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=redirect' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/redirect/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/redirect/plugins -F "name=${NAME}" -F "config.location=https://google.com"
 
 config-not-path:
-	@curl -s -X POST http://localhost:8001/services/ -d 'name=oauth' -d url=http://localhost
-	@curl -s -X POST http://localhost:8001/services/oauth/routes -d 'paths[]=/' 
-	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}"  -F "config.location=https://google.com" -F "config.include_path=false"
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=redirect' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/redirect/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/redirect/plugins -F "name=${NAME}"  -F "config.location=https://google.com" -F "config.include_path=false"
 
 config-not-qs:
-	@curl -s -X POST http://localhost:8001/services/ -d 'name=oauth' -d url=http://localhost
-	@curl -s -X POST http://localhost:8001/services/oauth/routes -d 'paths[]=/' 
-	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}"  -F "config.location=https://google.com" -F "config.include_querystring=false"
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=redirect' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/redirect/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/redirect/plugins -F "name=${NAME}"  -F "config.location=https://google.com" -F "config.include_querystring=false"
 
 config-not-path-qs:
-	@curl -s -X POST http://localhost:8001/services/ -d 'name=oauth' -d url=http://localhost
-	@curl -s -X POST http://localhost:8001/services/oauth/routes -d 'paths[]=/' 
-	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}" -F "config.location=https://google.com" -F "config.include_querystring=false"  -F "config.include_path=false"
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=redirect' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/redirect/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/redirect/plugins -F "name=${NAME}" -F "config.location=https://google.com" -F "config.include_querystring=false"  -F "config.include_path=false"
 
 config-trim:
-	@curl -s -X POST http://localhost:8001/services/ -d 'name=oauth' -d url=http://localhost
-	@curl -s -X POST http://localhost:8001/services/oauth/routes -d 'paths[]=/' 
-	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}" -F "config.location=https://google.com" -F "config.trim_trailing_slash=true"
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=redirect' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/redirect/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/redirect/plugins -F "name=${NAME}" -F "config.location=https://google.com" -F "config.trim_trailing_slash=true"
+
+config-http-to-https:
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=redirect' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/redirect/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/redirect/plugins -F "name=${NAME}" -F "config.http_to_https=true" -F "config.location=https://google.com"
+
+config-trim-and-http-to-https:
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=redirect' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/redirect/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/redirect/plugins -F "name=${NAME}" -F "config.http_to_https=true" -F "config.location=https://google.com" -F "config.trim_trailing_slash=true"
 
 
 config-remove-plugin:

@@ -87,7 +87,28 @@ req-aux:
 config:
 	@curl -s -X POST http://localhost:8001/services/ -d 'name=oauth' -d url=http://localhost
 	@curl -s -X POST http://localhost:8001/services/oauth/routes -d 'paths[]=/' 
-	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}" 
+	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}" -F "config.location=https://google.com"
+
+config-not-path:
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=oauth' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/oauth/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}"  -F "config.location=https://google.com" -F "config.include_path=false"
+
+config-not-qs:
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=oauth' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/oauth/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}"  -F "config.location=https://google.com" -F "config.include_querystring=false"
+
+config-not-path-qs:
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=oauth' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/oauth/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}" -F "config.location=https://google.com" -F "config.include_querystring=false"  -F "config.include_path=false"
+
+config-trim:
+	@curl -s -X POST http://localhost:8001/services/ -d 'name=oauth' -d url=http://localhost
+	@curl -s -X POST http://localhost:8001/services/oauth/routes -d 'paths[]=/' 
+	@curl -i -X POST http://localhost:8001/services/oauth/plugins -F "name=${NAME}" -F "config.location=https://google.com" -F "config.trim_trailing_slash=true"
+
 
 config-remove-plugin:
 	@curl -i -X DELETE http://localhost:8001/plugins/$$(curl -s http://localhost:8001/plugins/ | jq -r ".data[] |  select (.name|test(\"${NAME}\")) .id")

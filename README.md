@@ -14,6 +14,7 @@ plugins:
       redirect_http_code: 302
       http_to_https: false
       include_path: true
+      include_querystring: true
       trim_trailing_slash: false
       location: http://localhost
 ```
